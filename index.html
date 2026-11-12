@@ -20,7 +20,13 @@
 <div class="panel"><div class="tag">03 · CHUNKING</div><h2>Chunking workbench</h2><p class="note">Group a long sequence into meaningful units. Chunking helps when groups are already familiar; simply inserting separators does not automatically expand memory capacity.</p><label for="mnChunkInput">Sequence</label><input id="mnChunkInput" value="1492177619452026" style="width:100%" aria-label="Sequence to chunk"><label for="mnChunkSize" style="margin-top:12px">Chunk length: <strong id="mnChunkSizeLabel">4</strong></label><input id="mnChunkSize" type="range" min="2" max="6" value="4"><div id="mnChunkOutput" class="answer"></div><p id="mnChunkHint" class="note"></p></div>
 <div class="panel"><div class="tag">04 · VISUAL ASSOCIATION</div><h2>Imagery & linking</h2><p class="note">Turn two abstract or unrelated words into a vivid, interactive mental scene. The suggested imagery is a prompt; your own meaningful images may work better.</p><div class="row"><button class="primary" id="mnNewPair">New word pair</button><button id="mnShowPair">Show linking prompt</button></div><h3 id="mnPairWords" class="prompt"></h3><div id="mnPairPrompt" class="answer hidden"></div><label for="mnPairStory" style="margin-top:12px">Your memorable scene</label><textarea id="mnPairStory" placeholder="Describe a surprising image that connects the two words."></textarea></div>
 <div class="panel"><div class="tag">05 · TECHNIQUE GUIDE</div><h2>When to use each technique</h2><div id="mnGuide" class="grid"></div></div>
-<div class="panel"><div class="tag">06 · PRACTICE HISTORY</div><h2>Mnemonic performance</h2><div id="mnHistory" class="note"></div><div class="row"><button id="mnExport">Export mnemonics JSON</button><button id="mnReset">Reset mnemonics data</button></div><p class="note">Scores measure recall of your own entries in these exercises. They do not measure general memory ability, and exact-match scoring may miss equivalent answers.</p></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
+<div class="panel"><div class="tag">06 · PRACTICE HISTORY</div><h2>Mnemonic performance</h2><div id="mnHistory" class="note"></div><div class="row"><button id="mnExport">Export mnemonics JSON</button><button id="mnReset">Reset mnemonics data</button></div><p class="note">Scores measure recall of your own entries in these exercises. They do not measure general memory ability, and exact-match scoring may miss equivalent answers.</p></div></section><section id="analytics" class="hidden">
+<div class="panel"><div class="tag">Memory Analytics · V5</div><h2>Learning & performance dashboard</h2><p class="note">Combine locally stored results across memory exercises. Scores reflect task-specific practice—not IQ, clinical assessment, or proof of general cognitive improvement.</p><div id="analyticsSummary" class="grid"></div></div>
+<div class="panel"><div class="tag">01 · LEARNING CURVES</div><h2>Rolling accuracy</h2><label for="analyticsTask">Exercise</label><select id="analyticsTask"><option value="all">All scored exercises</option><option value="back">Backward digit span</option><option value="assoc">Paired associates</option><option value="spatial">Spatial sequence</option><option value="span">Forward digit span</option><option value="calibration">Calibration quiz</option><option value="mnemonic">Mnemonic recall</option><option value="observatory">Neuroscience quiz</option></select><label for="analyticsWindow">Rolling window: <strong id="analyticsWindowLabel">5 trials</strong></label><input id="analyticsWindow" type="range" min="3" max="20" value="5"><svg id="analyticsCurve" viewBox="0 0 700 270" role="img" aria-label="Rolling accuracy by practice trial"></svg><p id="analyticsCurveText" class="note"></p></div>
+<div class="panel"><div class="tag">02 · TASK COMPARISON</div><h2>Exercise-by-exercise accuracy</h2><div id="analyticsTasks" class="grid"></div><p class="note">Different tasks use different scoring and difficulty. Percentages are not directly comparable measures of cognitive ability.</p></div>
+<div class="panel"><div class="tag">03 · CONSISTENCY</div><h2>Last 28 days</h2><div id="analyticsCalendar" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;max-width:540px"></div><p id="analyticsConsistency" class="note"></p></div>
+<div class="panel"><div class="tag">04 · METACOGNITION</div><h2>Confidence and accuracy</h2><div id="analyticsCalibration" class="grid"></div><p id="analyticsCalibrationText" class="note"></p></div>
+<div class="panel"><div class="tag">05 · INTERPRETATION & EXPORT</div><h2>Reading your results</h2><p class="note">Improvement may reflect familiarity with the specific exercise, strategy changes, or changing task difficulty. To test transfer, use different tasks and delayed follow-ups. Confidence calibration estimates are unstable with small samples.</p><div class="row"><button id="analyticsRefresh" class="primary">Refresh analytics</button><button id="analyticsExport">Export unified JSON</button></div></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
 <section id="progress" class="hidden"><div class="panel"><h2>Learning analytics</h2><div id="progressStats" class="grid"></div><p id="progressDetail" class="note"></p><div class="row"><button id="export">Export JSON</button><button id="reset">Clear local learning data</button></div></div><div class="panel"><h2>Privacy and interpretation</h2><p class="note">Review intervals are heuristic. Self-ratings are subjective, and short-run quiz accuracy is not a validated measure of long-term memory. Your learning data is stored in localStorage on this device and browser; clearing browser storage removes it.</p></div></section>
 <footer>Memory Learning Lab · Educational tool · Offline-capable after loading when cached by your browser</footer></main><script>
 "use strict";
@@ -85,7 +91,7 @@ const key="memory-learning-lab-v1";
 let data={reviews:{},calibration:[],span:[]};
 try{const raw=JSON.parse(localStorage.getItem(key)||"null");if(raw&&typeof raw==="object")data={reviews:raw.reviews||{},calibration:Array.isArray(raw.calibration)?raw.calibration:[],span:Array.isArray(raw.span)?raw.span:[]}}catch(e){}
 function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){$("studyFeedback").textContent="Storage unavailable; progress may not persist."}}
-const tabs=[["Overview","overview"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Library","library"],["Progress","progress"]];
+const tabs=[["Overview","overview"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Analytics","analytics"],["Library","library"],["Progress","progress"]];
 function navigate(id){tabs.forEach(([name,key])=>{$(key).classList.toggle("hidden",key!==id);document.querySelector('[data-tab="'+key+'"]').setAttribute("aria-selected",String(key===id))});if(id==="overview")renderOverview();if(id==="study")renderQueue();if(id==="progress")renderProgress();window.scrollTo(0,0)}
 tabs.forEach(([name,id])=>{const b=document.createElement("button");b.textContent=name;b.dataset.tab=id;b.setAttribute("role","tab");b.onclick=()=>navigate(id);$("nav").append(b)});
 $("goStudy").onclick=()=>navigate("study");$("goLab").onclick=()=>navigate("experiments");
@@ -227,5 +233,112 @@ mnGuides.forEach(([name,desc,how])=>{const c=document.createElement("article");c
 $("mnExport").onclick=()=>{const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),mnemonics:mnData},null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="memory-mnemonics-v4.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 $("mnReset").onclick=()=>{if(!confirm("Clear your memory palace, peg associations, and mnemonic practice history?"))return;mnData={palace:[],pegs:{},attempts:[]};mnSave();mnRenderPalace();mnRenderPegs();mnRenderStats();$("mnPalacePractice").classList.add("hidden");$("mnPegPractice").classList.add("hidden")};
 mnRenderPalace();mnRenderPegs();mnChunk();mnPairRender();mnRenderStats();
+
+
+const analyticsNames={back:"Backward digit span",assoc:"Paired associates",spatial:"Spatial sequence",span:"Forward digit span",calibration:"Calibration quiz",mnemonic:"Mnemonic recall",observatory:"Neuroscience quiz"};
+function analyticsTrials(){
+ const rows=[];
+ function collect(type,items){
+  if(!Array.isArray(items))return;
+  for(const item of items){
+   if(!item||typeof item!=="object"||typeof item.correct!=="boolean")continue;
+   const t=Date.parse(item.at);
+   if(!Number.isFinite(t))continue;
+   rows.push({type,time:t,correct:item.correct,confidence:typeof item.confidence==="number"?item.confidence:null,level:typeof item.level==="number"?item.level:null});
+  }
+ }
+ for(const type of ["back","assoc","spatial"])collect(type,trainData[type]);
+ collect("span",data.span);collect("calibration",data.calibration);
+ collect("mnemonic",mnData.attempts);collect("observatory",data.observatory);
+ return rows.sort((a,b)=>a.time-b.time);
+}
+function analyticsDate(t){
+ const d=new Date(t);
+ return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
+}
+function analyticsPercent(v){return (100*v).toFixed(0)+"%"}
+function analyticsCard(parent,title,body){
+ const c=document.createElement("article");c.className="card";
+ const h=document.createElement("h3");h.textContent=title;
+ const p=document.createElement("p");p.className="note";p.textContent=body;
+ c.append(h,p);parent.append(c);
+}
+function analyticsCurve(){
+ const task=$("analyticsTask").value;
+ const windowSize=Number($("analyticsWindow").value);
+ $("analyticsWindowLabel").textContent=windowSize+" trials";
+ const trials=analyticsTrials().filter(x=>task==="all"||x.type===task);
+ const chart=$("analyticsCurve");chart.replaceChildren();
+ for(let j=0;j<=4;j++){
+  const y=25+j*47.5;
+  chart.append(el("line",{x1:55,y1:y,x2:675,y2:y,stroke:"#30485e"}));
+  chart.append(el("text",{x:8,y:y+5,fill:"#b6c9da","font-size":13},String(100-25*j)+"%"));
+ }
+ if(!trials.length){$("analyticsCurveText").textContent="No scored trials yet for this exercise.";return}
+ const values=trials.map((_,i)=>{
+  const sample=trials.slice(Math.max(0,i-windowSize+1),i+1);
+  return sample.filter(x=>x.correct).length/sample.length;
+ });
+ const points=values.map((v,i)=>(55+(trials.length===1?310:i*620/(trials.length-1))).toFixed(1)+","+(215-190*v).toFixed(1)).join(" ");
+ chart.append(el("polyline",{points,stroke:"#79d8cd","stroke-width":3,fill:"none"}));
+ chart.append(el("text",{x:55,y:255,fill:"#b6c9da","font-size":13},"First"));
+ chart.append(el("text",{x:630,y:255,fill:"#b6c9da","font-size":13},"Latest"));
+ const n=Math.min(windowSize,trials.length);
+ const first=trials.slice(0,n),last=trials.slice(-n);
+ $("analyticsCurveText").textContent=trials.length+" trials · First "+n+": "+analyticsPercent(first.filter(x=>x.correct).length/n)+" · Last "+n+": "+analyticsPercent(last.filter(x=>x.correct).length/n)+". Interpret cautiously when task difficulty changes.";
+}
+function analyticsRender(){
+ const rows=analyticsTrials(),days=new Set(rows.map(x=>analyticsDate(x.time)));
+ const summary=$("analyticsSummary");summary.replaceChildren();
+ stat(summary,"Scored trials",rows.length);
+ stat(summary,"Practice days",days.size);
+ stat(summary,"Task types",new Set(rows.map(x=>x.type)).size);
+ stat(summary,"Overall accuracy",rows.length?analyticsPercent(rows.filter(x=>x.correct).length/rows.length):"—");
+ const tasks=$("analyticsTasks");tasks.replaceChildren();
+ for(const type of Object.keys(analyticsNames)){
+  const subset=rows.filter(x=>x.type===type);
+  const recent=subset.slice(-10);
+  analyticsCard(tasks,analyticsNames[type],subset.length?subset.length+" trials · Overall "+analyticsPercent(subset.filter(x=>x.correct).length/subset.length)+" · Last "+recent.length+" "+analyticsPercent(recent.filter(x=>x.correct).length/recent.length):"No trials recorded");
+ }
+ const calendar=$("analyticsCalendar");calendar.replaceChildren();
+ const today=new Date();today.setHours(12,0,0,0);
+ let active=0;
+ for(let i=27;i>=0;i--){
+  const d=new Date(today);d.setDate(today.getDate()-i);
+  const practiced=days.has(analyticsDate(d.getTime()));
+  if(practiced)active++;
+  const cell=document.createElement("div");cell.className="card";
+  cell.style.padding="9px 3px";cell.style.textAlign="center";
+  cell.style.background=practiced?"#23645e":"#17283d";
+  cell.textContent=String(d.getDate());
+  cell.title=d.toDateString()+(practiced?" · practiced":" · no scored trial");
+  cell.setAttribute("aria-label",cell.title);calendar.append(cell);
+ }
+ $("analyticsConsistency").textContent=active+" of the last 28 days had at least one scored exercise ("+analyticsPercent(active/28)+"). Flashcard reviews are tracked separately.";
+ const cal=Array.isArray(data.calibration)?data.calibration.filter(x=>x&&typeof x.correct==="boolean"&&Number.isFinite(x.confidence)&&x.confidence>=0&&x.confidence<=1):[];
+ const c=$("analyticsCalibration");c.replaceChildren();
+ if(cal.length){
+  const confidence=cal.reduce((s,x)=>s+x.confidence,0)/cal.length;
+  const accuracy=cal.filter(x=>x.correct).length/cal.length;
+  const brier=cal.reduce((s,x)=>s+Math.pow(x.confidence-(x.correct?1:0),2),0)/cal.length;
+  stat(c,"Quiz responses",cal.length);stat(c,"Accuracy",analyticsPercent(accuracy));
+  stat(c,"Mean confidence",analyticsPercent(confidence));stat(c,"Brier score",brier.toFixed(3));
+  $("analyticsCalibrationText").textContent="Brier score measures squared confidence error (0 is best). Repeated questions and small samples limit interpretation.";
+ }else $("analyticsCalibrationText").textContent="Complete the confidence quiz under Experiments to see calibration statistics.";
+ analyticsCurve();
+}
+$("analyticsTask").onchange=analyticsCurve;
+$("analyticsWindow").oninput=analyticsCurve;
+$("analyticsRefresh").onclick=analyticsRender;
+$("analyticsExport").onclick=()=>{
+ const payload={exportedAt:new Date().toISOString(),trials:analyticsTrials(),studyReviews:data.reviews,experimentData:{span:data.span,calibration:data.calibration,observatory:data.observatory||[]},training:trainData,mnemonics:mnData};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="memory-unified-analytics-v5.json";a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+const previousNavigate=navigate;
+navigate=function(id){previousNavigate(id);if(id==="analytics")analyticsRender()};
+analyticsRender();
 
 </script></body></html>
