@@ -26,7 +26,11 @@
 <div class="panel"><div class="tag">02 · TASK COMPARISON</div><h2>Exercise-by-exercise accuracy</h2><div id="analyticsTasks" class="grid"></div><p class="note">Different tasks use different scoring and difficulty. Percentages are not directly comparable measures of cognitive ability.</p></div>
 <div class="panel"><div class="tag">03 · CONSISTENCY</div><h2>Last 28 days</h2><div id="analyticsCalendar" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;max-width:540px"></div><p id="analyticsConsistency" class="note"></p></div>
 <div class="panel"><div class="tag">04 · METACOGNITION</div><h2>Confidence and accuracy</h2><div id="analyticsCalibration" class="grid"></div><p id="analyticsCalibrationText" class="note"></p></div>
-<div class="panel"><div class="tag">05 · INTERPRETATION & EXPORT</div><h2>Reading your results</h2><p class="note">Improvement may reflect familiarity with the specific exercise, strategy changes, or changing task difficulty. To test transfer, use different tasks and delayed follow-ups. Confidence calibration estimates are unstable with small samples.</p><div class="row"><button id="analyticsRefresh" class="primary">Refresh analytics</button><button id="analyticsExport">Export unified JSON</button></div></div></section><section id="research" class="hidden"><div class="panel"><div class="tag">Memory Research Library · V7</div><h2>The science behind remembering</h2><p class="note">Explore landmark studies, influential researchers, theoretical frameworks, and primary literature. Distinguish original findings from later interpretations and unresolved debates. Links open publisher or DOI records; some full texts may require access.</p><div id="researchStats" class="grid"></div></div><div class="panel"><div class="tag">DISCOVER THE LITERATURE</div><div class="row"><input id="researchSearch" placeholder="Search researchers, theories, findings…" aria-label="Search research library"><select id="researchTopic" aria-label="Filter by topic"><option value="all">All topics</option><option value="Foundations">Foundations</option><option value="Working memory">Working memory</option><option value="Retrieval">Retrieval</option><option value="Spacing">Spacing</option><option value="Emotion">Emotion</option><option value="Reconstruction">Reconstruction</option><option value="Consolidation">Consolidation</option><option value="Metacognition">Metacognition</option></select></div><div class="row"><select id="researchSort" aria-label="Sort research"><option value="year">Chronological</option><option value="newest">Newest first</option><option value="author">Author A–Z</option></select><label><input type="checkbox" id="researchSavedOnly"> Saved only</label></div><p id="researchCount" class="note"></p><div id="researchResults" class="stack"></div></div><div class="panel"><div class="tag">THEORY COMPARISON</div><h2>Competing explanations</h2><div id="researchTheories" class="grid"></div></div><div class="panel"><div class="tag">RESEARCH TIMELINE</div><h2>How memory science developed</h2><div id="researchTimeline" class="stack"></div></div><div class="panel"><div class="tag">RESEARCH LITERACY</div><h2>Evaluate the evidence</h2><div id="researchGuide" class="grid"></div><div class="row"><button id="researchExport">Export saved references</button><button id="researchClear">Clear saved references</button></div><p class="note">This is a curated introductory collection, not a systematic literature review. Citations and interpretations should be checked against original publications before academic use.</p></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
+<div class="panel"><div class="tag">05 · INTERPRETATION & EXPORT</div><h2>Reading your results</h2><p class="note">Improvement may reflect familiarity with the specific exercise, strategy changes, or changing task difficulty. To test transfer, use different tasks and delayed follow-ups. Confidence calibration estimates are unstable with small samples.</p><div class="row"><button id="analyticsRefresh" class="primary">Refresh analytics</button><button id="analyticsExport">Export unified JSON</button></div></div></section><section id="research" class="hidden"><div class="panel"><div class="tag">Memory Research Library · V7</div><h2>The science behind remembering</h2><p class="note">Explore landmark studies, influential researchers, theoretical frameworks, and primary literature. Distinguish original findings from later interpretations and unresolved debates. Links open publisher or DOI records; some full texts may require access.</p><div id="researchStats" class="grid"></div></div><div class="panel"><div class="tag">DISCOVER THE LITERATURE</div><div class="row"><input id="researchSearch" placeholder="Search researchers, theories, findings…" aria-label="Search research library"><select id="researchTopic" aria-label="Filter by topic"><option value="all">All topics</option><option value="Foundations">Foundations</option><option value="Working memory">Working memory</option><option value="Retrieval">Retrieval</option><option value="Spacing">Spacing</option><option value="Emotion">Emotion</option><option value="Reconstruction">Reconstruction</option><option value="Consolidation">Consolidation</option><option value="Metacognition">Metacognition</option></select></div><div class="row"><select id="researchSort" aria-label="Sort research"><option value="year">Chronological</option><option value="newest">Newest first</option><option value="author">Author A–Z</option></select><label><input type="checkbox" id="researchSavedOnly"> Saved only</label></div><p id="researchCount" class="note"></p><div id="researchResults" class="stack"></div></div><div class="panel"><div class="tag">THEORY COMPARISON</div><h2>Competing explanations</h2><div id="researchTheories" class="grid"></div></div><div class="panel"><div class="tag">RESEARCH TIMELINE</div><h2>How memory science developed</h2><div id="researchTimeline" class="stack"></div></div><div class="panel"><div class="tag">RESEARCH LITERACY</div><h2>Evaluate the evidence</h2><div id="researchGuide" class="grid"></div><div class="row"><button id="researchExport">Export saved references</button><button id="researchClear">Clear saved references</button></div><p class="note">This is a curated introductory collection, not a systematic literature review. Citations and interpretations should be checked against original publications before academic use.</p></div></section><section id="laboratory" class="hidden">
+<div class="panel"><div class="tag">Interactive Memory Research Laboratory · V8</div><h2>Run classic memory experiments</h2><p class="note">Five simplified, self-administered paradigms. Collect trial-level data, inspect condition differences, and compare results with theoretical expectations. These are educational demonstrations—not validated research instruments. Order, expectancy, item familiarity, and small samples can bias results.</p><div id="labStats" class="grid"></div></div>
+<div class="panel"><div class="tag">EXPERIMENT DESIGN</div><label for="labParadigm">Choose a paradigm</label><select id="labParadigm"><option value="serial">Serial-position effect</option><option value="interference">Proactive / retroactive interference</option><option value="depth">Levels of processing</option><option value="context">Encoding specificity</option><option value="rif">Retrieval-induced forgetting</option></select><div id="labTheory" class="note"></div><div class="row"><button class="primary" id="labStart">Start experiment</button><button id="labAbort">End current run</button></div><div id="labStage" class="answer" style="margin-top:14px;white-space:pre-line;min-height:80px" aria-live="polite">Select an experiment to begin.</div><div id="labChoices" class="stack" style="margin-top:12px"></div><div class="row" style="margin-top:12px"><input id="labAnswer" placeholder="Type your response" aria-label="Experiment response"><button id="labSubmit">Submit response</button><button id="labAdvance">Continue</button></div><p id="labFeedback" class="feedback" aria-live="polite"></p></div>
+<div class="panel"><div class="tag">RESULTS</div><h2>Recorded outcomes</h2><label for="labResultFilter">View experiment</label><select id="labResultFilter"><option value="all">All experiments</option><option value="serial">Serial position</option><option value="interference">Interference</option><option value="depth">Levels of processing</option><option value="context">Encoding specificity</option><option value="rif">Retrieval-induced forgetting</option></select><div id="labResults" class="grid"></div><svg id="labChart" viewBox="0 0 700 250" role="img" aria-label="Correct response percentage by experimental condition"></svg><p id="labInterpretation" class="note"></p><div class="row"><button id="labExport">Export trial-level JSON</button><button id="labReset">Clear laboratory history</button></div></div>
+<div class="panel"><div class="tag">RESEARCH CAUTIONS</div><p class="note">For credible causal inference, experiments need adequate counterbalancing, random assignment, sufficient trials, preregistered analyses, and appropriate control of confounds. A single run cannot establish a cognitive effect. Retrieval-induced forgetting is particularly sensitive to testing and cue conditions; the exercise here is only a conceptual analogue.</p></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
 <section id="progress" class="hidden"><div class="panel"><h2>Learning analytics</h2><div id="progressStats" class="grid"></div><p id="progressDetail" class="note"></p><div class="row"><button id="export">Export JSON</button><button id="reset">Clear local learning data</button></div></div><div class="panel"><h2>Privacy and interpretation</h2><p class="note">Review intervals are heuristic. Self-ratings are subjective, and short-run quiz accuracy is not a validated measure of long-term memory. Your learning data is stored in localStorage on this device and browser; clearing browser storage removes it.</p></div></section>
 <footer>Memory Learning Lab · Educational tool · Offline-capable after loading when cached by your browser</footer></main><script>
 "use strict";
@@ -91,7 +95,7 @@ const key="memory-learning-lab-v1";
 let data={reviews:{},calibration:[],span:[]};
 try{const raw=JSON.parse(localStorage.getItem(key)||"null");if(raw&&typeof raw==="object")data={reviews:raw.reviews||{},calibration:Array.isArray(raw.calibration)?raw.calibration:[],span:Array.isArray(raw.span)?raw.span:[]}}catch(e){}
 function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){$("studyFeedback").textContent="Storage unavailable; progress may not persist."}}
-const tabs=[["Overview","overview"],["Pathways","pathways"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Analytics","analytics"],["Research","research"],["Library","library"],["Progress","progress"]];
+const tabs=[["Overview","overview"],["Pathways","pathways"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Analytics","analytics"],["Research","research"],["Lab","laboratory"],["Library","library"],["Progress","progress"]];
 function navigate(id){tabs.forEach(([name,key])=>{$(key).classList.toggle("hidden",key!==id);document.querySelector('[data-tab="'+key+'"]').setAttribute("aria-selected",String(key===id))});if(id==="overview")renderOverview();if(id==="study")renderQueue();if(id==="progress")renderProgress();window.scrollTo(0,0)}
 tabs.forEach(([name,id])=>{const b=document.createElement("button");b.textContent=name;b.dataset.tab=id;b.setAttribute("role","tab");b.onclick=()=>navigate(id);$("nav").append(b)});
 $("goStudy").onclick=()=>navigate("study");$("goLab").onclick=()=>navigate("experiments");
@@ -503,5 +507,154 @@ $("researchExport").onclick=()=>{
 };
 $("researchClear").onclick=()=>{if(!confirm("Clear all saved research references?"))return;researchSaved={};researchStore();researchRender()};
 researchRender();
+
+
+const labKey="memory-research-lab-v8";
+let labHistory=[];
+try{const v=JSON.parse(localStorage.getItem(labKey)||"[]");if(Array.isArray(v))labHistory=v.filter(x=>x&&typeof x==="object"&&typeof x.correct==="boolean"&&typeof x.condition==="string").slice(-5000)}catch(e){}
+const labTheories={
+serial:"Prediction: Immediate free recall often favors early (primacy) and late (recency) list positions. Here, recall is probed one position at a time; this is not a conventional free-recall protocol.",
+interference:"Prediction: Competing associations can impair retrieval. Proactive interference involves earlier learning affecting later learning; retroactive interference involves later learning affecting earlier learning. This demonstration tests one association at a time.",
+depth:"Prediction: Meaning-oriented processing often supports better later retention than surface-form judgments. This exercise contrasts semantic and orthographic prompts, but exposure and response demands are simplified.",
+context:"Prediction: Retrieval cues overlapping with encoding conditions may improve recall. Here, text labels stand in for contexts; they do not reproduce immersive environmental context.",
+rif:"Prediction: Practicing retrieval of some category exemplars can impair later recall of related, unpracticed exemplars under certain conditions. This analogue has too few items to demonstrate the phenomenon reliably."
+};
+const labSets={
+serial:["harbor","candle","planet","ribbon","forest","window","pencil","garden","silver"],
+interference:[["CLOUD","lemon"],["CLOUD","anchor"],["RIVER","violet"]],
+depth:[["copper","semantic"],["lantern","surface"],["meadow","semantic"],["orbit","surface"]],
+context:[["orchid","Library"],["compass","Garden"],["marble","Library"],["violin","Garden"]],
+rif:[["FRUIT","apple","practiced"],["FRUIT","pear","related"],["TOOL","hammer","baseline"],["TOOL","wrench","baseline"]]
+};
+let labRun=null,labTimer=null,labToken=0;
+function labSave(){try{localStorage.setItem(labKey,JSON.stringify(labHistory))}catch(e){$("labFeedback").textContent="Local storage is unavailable; results may not persist."}}
+function labClearTimer(){if(labTimer!==null){clearTimeout(labTimer);labTimer=null}}
+function labShow(text){$("labStage").textContent=text}
+function labInput(show){$("labAnswer").style.display=show?"":"none";$("labSubmit").style.display=show?"":"none";$("labAdvance").style.display=show?"none":""}
+function labChoices(items,callback){
+ const root=$("labChoices");root.replaceChildren();
+ items.forEach((item,i)=>{const b=document.createElement("button");b.textContent=item;b.onclick=()=>callback(i);root.append(b)});
+}
+function labRecord(condition,correct,expected,given,position){
+ if(!labRun)return;
+ labHistory.push({experiment:labRun.kind,condition,correct,expected,given,position:position??null,runId:labRun.id,at:new Date().toISOString()});
+ labHistory=labHistory.slice(-5000);labSave();labRenderResults();
+}
+function labFinish(){
+ labClearTimer();labToken++;labRun=null;labInput(false);labChoices([],()=>{});labShow("Run complete. Review your results below or start another experiment.");$("labFeedback").textContent="Trial-level outcomes saved locally.";
+}
+function labPromptRecall(cue,expected,condition,position){
+ labRun.phase="recall";labRun.expected=expected;labRun.condition=condition;labRun.position=position;
+ labShow(cue);labChoices([],()=>{});$("labAnswer").value="";labInput(true);$("labAnswer").focus();
+}
+function labNext(){
+ if(!labRun)return;
+ const run=labRun,k=run.kind,i=run.index;
+ if(k==="serial"){
+  if(i>=labSets.serial.length){labFinish();return}
+  const position=run.order[i],word=labSets.serial[position];
+  labPromptRecall("Which word appeared at position "+(position+1)+" in the list?",word,position<3?"Primacy":position>=6?"Recency":"Middle",position+1);
+ }else if(k==="interference"){
+  if(i>=3){labFinish();return}
+  const [cue,target]=labSets.interference[i];
+  labPromptRecall("Recall the target most recently paired with "+cue+".",target,["Initial learning","Proactive competition","Retroactive test"][i],i+1);
+ }else if(k==="depth"){
+  if(i>=labSets.depth.length){labFinish();return}
+  const [word,condition]=labSets.depth[i];
+  labPromptRecall("Recall the word from "+(condition==="semantic"?"the MEANING question":"the LETTER-FORM question")+" at position "+(i+1)+".",word,condition==="semantic"?"Semantic":"Surface",i+1);
+ }else if(k==="context"){
+  if(i>=labSets.context.length){labFinish();return}
+  const [word,context]=labSets.context[i],match=i%2===0;
+  labPromptRecall("Retrieval setting: "+(match?context:context==="Library"?"Garden":"Library")+". Recall the word paired with "+context+" at position "+(i+1)+".",word,match?"Matching cue":"Mismatched cue",i+1);
+ }else if(k==="rif"){
+  if(i>=labSets.rif.length){labFinish();return}
+  const [category,word,condition]=labSets.rif[i];
+  labPromptRecall("Category "+category+": recall the item at position "+(i+1)+".",word,condition==="practiced"?"Practiced":condition==="related"?"Related unpracticed":"Baseline",i+1);
+ }
+}
+function labBeginRecall(){
+ if(!labRun)return;
+ labRun.phase="recall";labRun.index=0;
+ if(labRun.kind==="serial")labRun.order=[...Array(labSets.serial.length).keys()].sort(()=>Math.random()-.5);
+ labNext();
+}
+function labStudyStep(){
+ if(!labRun)return;
+ const run=labRun,k=run.kind,i=run.index;
+ let message="",total=0;
+ if(k==="serial"){total=labSets.serial.length;message="Study word "+(i+1)+" / "+total+":\n\n"+labSets.serial[i]}
+ if(k==="interference"){total=3;const [cue,target]=labSets.interference[i];message="Study association "+(i+1)+" / "+total+":\n\n"+cue+" → "+target}
+ if(k==="depth"){total=labSets.depth.length;const [word,condition]=labSets.depth[i];message="Encoding question "+(i+1)+" / "+total+":\n\n"+(condition==="semantic"?"Does "+word+" refer to something tangible?":"Does "+word+" contain the letter E?")+"\n\nWord: "+word+"\n\nThink of your answer before continuing."}
+ if(k==="context"){total=labSets.context.length;const [word,context]=labSets.context[i];message="Study setting: "+context+"\n\nWord "+(i+1)+" / "+total+": "+word}
+ if(k==="rif"){total=labSets.rif.length;const [category,word]=labSets.rif[i];message="Study "+(i+1)+" / "+total+":\n\n"+category+" → "+word}
+ labShow(message);labChoices([],()=>{});labInput(false);
+ $("labFeedback").textContent="Study this item. Continue when ready.";
+}
+$("labStart").onclick=()=>{
+ labClearTimer();labToken++;
+ const kind=$("labParadigm").value;
+ labRun={kind,id:Date.now()+"-"+Math.floor(Math.random()*1e6),index:0,phase:"study",order:[]};
+ $("labFeedback").textContent="";
+ labStudyStep();
+};
+$("labAbort").onclick=()=>{labFinish();$("labFeedback").textContent="Run ended. Previously submitted trials remain saved."};
+$("labAdvance").onclick=()=>{
+ if(!labRun)return;
+ if(labRun.phase==="study"){
+  labRun.index++;
+  if(labRun.index>=labSets[labRun.kind].length){
+   if(labRun.kind==="rif"){labRun.phase="practice";labShow("Retrieval practice: FRUIT → apple.\n\nImagine retrieving APPLE from the FRUIT category. Then continue to the final test.");$("labFeedback").textContent="This practice step is illustrative and is not independently scored.";return}
+   labBeginRecall();
+  }else labStudyStep();
+ }else if(labRun.phase==="practice")labBeginRecall();
+ else if(labRun.phase==="feedback"){labRun.index++;labNext()}
+};
+$("labSubmit").onclick=()=>{
+ if(!labRun||labRun.phase!=="recall")return;
+ const given=$("labAnswer").value.trim(),expected=labRun.expected;
+ if(!given){$("labFeedback").textContent="Enter a response before submitting.";return}
+ const ok=given.toLowerCase()===expected.toLowerCase();
+ labRecord(labRun.condition,ok,expected,given,labRun.position);
+ labRun.phase="feedback";labInput(false);
+ labShow((ok?"Correct.":"Not quite.")+"\n\nExpected: "+expected+"\nYour answer: "+given);
+ $("labFeedback").textContent="Continue to the next trial.";
+};
+$("labAnswer").addEventListener("keydown",e=>{if(e.key==="Enter"&&labRun&&labRun.phase==="recall")$("labSubmit").click()});
+$("labParadigm").onchange=()=>{$("labTheory").textContent=labTheories[$("labParadigm").value]};
+$("labResultFilter").onchange=labRenderResults;
+function labRenderResults(){
+ const filter=$("labResultFilter").value,rows=labHistory.filter(x=>filter==="all"||x.experiment===filter);
+ const root=$("labResults");root.replaceChildren();
+ const stats=$("labStats");stats.replaceChildren();
+ stat(stats,"Recorded trials",labHistory.length);
+ stat(stats,"Experiment types",new Set(labHistory.map(x=>x.experiment)).size);
+ stat(stats,"Overall accuracy",labHistory.length?(100*labHistory.filter(x=>x.correct).length/labHistory.length).toFixed(0)+"%":"—");
+ const groups={};
+ for(const row of rows){const key=(row.experiment||"unknown")+" · "+row.condition;(groups[key]??=[]).push(row)}
+ const chart=$("labChart");chart.replaceChildren();
+ const keys=Object.keys(groups).sort();
+ if(!keys.length){$("labInterpretation").textContent="No recorded trials for this selection. Complete an experiment to populate results.";return}
+ keys.forEach((key,i)=>{
+  const arr=groups[key],rate=arr.filter(x=>x.correct).length/arr.length;
+  const title=key,body=arr.length+" trials · "+(100*rate).toFixed(0)+"% correct";
+  const card=document.createElement("article");card.className="card";
+  const h=document.createElement("h3");h.textContent=title;const p=document.createElement("p");p.textContent=body;card.append(h,p);root.append(card);
+ });
+ const shown=keys.slice(0,8),barWidth=590/shown.length;
+ shown.forEach((key,i)=>{
+  const arr=groups[key],rate=arr.filter(x=>x.correct).length/arr.length;
+  const x=65+i*barWidth,y=205-165*rate;
+  chart.append(el("rect",{x,y,width:Math.max(10,barWidth-10),height:205-y,fill:"#79d8cd"}));
+  chart.append(el("text",{x:x+3,y:220,fill:"#b6c9da","font-size":11},String(i+1)));
+  chart.append(el("text",{x:x+3,y:Math.max(18,y-5),fill:"#b6c9da","font-size":12},Math.round(rate*100)+"%"));
+ });
+ $("labInterpretation").textContent=keys.length+" condition group(s); chart displays up to 8, numbered in the same order as the result cards. Differences are descriptive, not evidence of causality. Repeated word sets and unbalanced exposure can influence scores.";
+}
+$("labExport").onclick=()=>{
+ const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),trials:labHistory},null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="memory-research-lab-v8.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$("labReset").onclick=()=>{if(!confirm("Delete all saved research laboratory trials from this browser?"))return;labHistory=[];labSave();labRenderResults()};
+$("labTheory").textContent=labTheories.serial;labInput(false);labRenderResults();
 
 </script></body></html>
