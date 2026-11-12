@@ -26,7 +26,7 @@
 <div class="panel"><div class="tag">02 · TASK COMPARISON</div><h2>Exercise-by-exercise accuracy</h2><div id="analyticsTasks" class="grid"></div><p class="note">Different tasks use different scoring and difficulty. Percentages are not directly comparable measures of cognitive ability.</p></div>
 <div class="panel"><div class="tag">03 · CONSISTENCY</div><h2>Last 28 days</h2><div id="analyticsCalendar" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;max-width:540px"></div><p id="analyticsConsistency" class="note"></p></div>
 <div class="panel"><div class="tag">04 · METACOGNITION</div><h2>Confidence and accuracy</h2><div id="analyticsCalibration" class="grid"></div><p id="analyticsCalibrationText" class="note"></p></div>
-<div class="panel"><div class="tag">05 · INTERPRETATION & EXPORT</div><h2>Reading your results</h2><p class="note">Improvement may reflect familiarity with the specific exercise, strategy changes, or changing task difficulty. To test transfer, use different tasks and delayed follow-ups. Confidence calibration estimates are unstable with small samples.</p><div class="row"><button id="analyticsRefresh" class="primary">Refresh analytics</button><button id="analyticsExport">Export unified JSON</button></div></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
+<div class="panel"><div class="tag">05 · INTERPRETATION & EXPORT</div><h2>Reading your results</h2><p class="note">Improvement may reflect familiarity with the specific exercise, strategy changes, or changing task difficulty. To test transfer, use different tasks and delayed follow-ups. Confidence calibration estimates are unstable with small samples.</p><div class="row"><button id="analyticsRefresh" class="primary">Refresh analytics</button><button id="analyticsExport">Export unified JSON</button></div></div></section><section id="research" class="hidden"><div class="panel"><div class="tag">Memory Research Library · V7</div><h2>The science behind remembering</h2><p class="note">Explore landmark studies, influential researchers, theoretical frameworks, and primary literature. Distinguish original findings from later interpretations and unresolved debates. Links open publisher or DOI records; some full texts may require access.</p><div id="researchStats" class="grid"></div></div><div class="panel"><div class="tag">DISCOVER THE LITERATURE</div><div class="row"><input id="researchSearch" placeholder="Search researchers, theories, findings…" aria-label="Search research library"><select id="researchTopic" aria-label="Filter by topic"><option value="all">All topics</option><option value="Foundations">Foundations</option><option value="Working memory">Working memory</option><option value="Retrieval">Retrieval</option><option value="Spacing">Spacing</option><option value="Emotion">Emotion</option><option value="Reconstruction">Reconstruction</option><option value="Consolidation">Consolidation</option><option value="Metacognition">Metacognition</option></select></div><div class="row"><select id="researchSort" aria-label="Sort research"><option value="year">Chronological</option><option value="newest">Newest first</option><option value="author">Author A–Z</option></select><label><input type="checkbox" id="researchSavedOnly"> Saved only</label></div><p id="researchCount" class="note"></p><div id="researchResults" class="stack"></div></div><div class="panel"><div class="tag">THEORY COMPARISON</div><h2>Competing explanations</h2><div id="researchTheories" class="grid"></div></div><div class="panel"><div class="tag">RESEARCH TIMELINE</div><h2>How memory science developed</h2><div id="researchTimeline" class="stack"></div></div><div class="panel"><div class="tag">RESEARCH LITERACY</div><h2>Evaluate the evidence</h2><div id="researchGuide" class="grid"></div><div class="row"><button id="researchExport">Export saved references</button><button id="researchClear">Clear saved references</button></div><p class="note">This is a curated introductory collection, not a systematic literature review. Citations and interpretations should be checked against original publications before academic use.</p></div></section><section id="library" class="hidden"><div class="panel"><h2>Memory knowledge library</h2><p class="note">Search foundational concepts and strategies.</p><input id="search" type="search" placeholder="Search concepts…" aria-label="Search library"></div><div id="libraryResults" class="grid"></div></section>
 <section id="progress" class="hidden"><div class="panel"><h2>Learning analytics</h2><div id="progressStats" class="grid"></div><p id="progressDetail" class="note"></p><div class="row"><button id="export">Export JSON</button><button id="reset">Clear local learning data</button></div></div><div class="panel"><h2>Privacy and interpretation</h2><p class="note">Review intervals are heuristic. Self-ratings are subjective, and short-run quiz accuracy is not a validated measure of long-term memory. Your learning data is stored in localStorage on this device and browser; clearing browser storage removes it.</p></div></section>
 <footer>Memory Learning Lab · Educational tool · Offline-capable after loading when cached by your browser</footer></main><script>
 "use strict";
@@ -91,7 +91,7 @@ const key="memory-learning-lab-v1";
 let data={reviews:{},calibration:[],span:[]};
 try{const raw=JSON.parse(localStorage.getItem(key)||"null");if(raw&&typeof raw==="object")data={reviews:raw.reviews||{},calibration:Array.isArray(raw.calibration)?raw.calibration:[],span:Array.isArray(raw.span)?raw.span:[]}}catch(e){}
 function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){$("studyFeedback").textContent="Storage unavailable; progress may not persist."}}
-const tabs=[["Overview","overview"],["Pathways","pathways"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Analytics","analytics"],["Library","library"],["Progress","progress"]];
+const tabs=[["Overview","overview"],["Pathways","pathways"],["Study","study"],["Experiments","experiments"],["Observatory","observatory"],["Training","training"],["Mnemonics","mnemonics"],["Analytics","analytics"],["Research","research"],["Library","library"],["Progress","progress"]];
 function navigate(id){tabs.forEach(([name,key])=>{$(key).classList.toggle("hidden",key!==id);document.querySelector('[data-tab="'+key+'"]').setAttribute("aria-selected",String(key===id))});if(id==="overview")renderOverview();if(id==="study")renderQueue();if(id==="progress")renderProgress();window.scrollTo(0,0)}
 tabs.forEach(([name,id])=>{const b=document.createElement("button");b.textContent=name;b.dataset.tab=id;b.setAttribute("role","tab");b.onclick=()=>navigate(id);$("nav").append(b)});
 $("goStudy").onclick=()=>navigate("study");$("goLab").onclick=()=>navigate("experiments");
@@ -424,5 +424,84 @@ $("pathLessonBack").onclick=()=>{let ci=pathCourse,li=pathLesson-1;if(li<0){ci--
 $("pathLessonNext").onclick=()=>{let ci=pathCourse,li=pathLesson+1;if(li>=pathCourses[ci].lessons.length){ci++;li=0}if(ci<pathCourses.length)pathOpen(ci,li)};
 $("pathReset").onclick=()=>{if(!confirm("Clear all guided pathway milestones and quiz attempts? Other exercise data will remain unchanged."))return;pathState={completed:{},attempts:[]};pathSave();pathRenderCatalog();$("pathLessonPanel").classList.add("hidden")};
 pathRenderCatalog();
+
+
+const researchPapers=[
+{id:"ebb1885",year:1885,author:"Hermann Ebbinghaus",title:"Über das Gedächtnis: Untersuchungen zur experimentellen Psychologie",topic:"Foundations",kind:"Monograph",finding:"Systematic experiments on learning and retention established quantitative approaches to memory, including savings and retention over time.",caution:"The familiar smooth forgetting curve is an idealization; rates vary with materials, people, and conditions.",link:"https://archive.org/search?query=Ebbinghaus+Ueber+das+Gedaechtnis",module:"experiments"},
+{id:"scoville1957",year:1957,author:"William B. Scoville & Brenda Milner",title:"Loss of recent memory after bilateral hippocampal lesions",topic:"Foundations",kind:"Clinical case series",finding:"Profound anterograde amnesia after medial temporal lobe surgery helped establish a critical role for these structures in new declarative memory.",caution:"Lesions extended beyond the hippocampus; case-based findings do not imply a single memory center.",link:"https://doi.org/10.1136/jnnp.20.1.11",module:"observatory"},
+{id:"baddeley1974",year:1974,author:"Alan Baddeley & Graham Hitch",title:"Working Memory",topic:"Working memory",kind:"Theoretical chapter",finding:"Proposed a multicomponent account of temporary information maintenance and control rather than a unitary short-term store.",caution:"The model has been revised; components are theoretical constructs rather than isolated brain modules.",link:"https://doi.org/10.1016/S0079-7421(08)60452-1",module:"training"},
+{id:"loftus1974",year:1974,author:"Elizabeth F. Loftus & John C. Palmer",title:"Reconstruction of automobile destruction: An example of the interaction between language and memory",topic:"Reconstruction",kind:"Experiment",finding:"Question wording affected speed estimates and later reports in eyewitness-memory experiments.",caution:"Effects depend on context and measurement; the study does not imply that every memory is easily rewritten.",link:"https://doi.org/10.1016/S0022-5371(74)80011-3",module:"observatory"},
+{id:"mcgaugh2000",year:2000,author:"James L. McGaugh",title:"Memory—a century of consolidation",topic:"Consolidation",kind:"Review",finding:"Synthesized evidence for time-dependent stabilization and modulation of memory after learning.",caution:"Consolidation involves multiple processes and does not mean memories become immutable.",link:"https://doi.org/10.1126/science.287.5451.248",module:"observatory"},
+{id:"nader2000",year:2000,author:"Karim Nader, Glenn E. Schafe & Joseph E. LeDoux",title:"Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval",topic:"Consolidation",kind:"Animal experiment",finding:"In rats, retrieval under certain conditions was followed by a protein-synthesis-dependent process affecting later fear-memory expression.",caution:"Reconsolidation has boundary conditions; animal fear-learning results cannot be generalized uncritically to human autobiographical memories.",link:"https://doi.org/10.1038/35021052",module:"observatory"},
+{id:"roediger2006",year:2006,author:"Henry L. Roediger III & Jeffrey D. Karpicke",title:"Test-enhanced learning: Psychological science and the testing effect",topic:"Retrieval",kind:"Experiments",finding:"Retrieval practice improved delayed retention compared with additional studying under tested conditions.",caution:"Benefits depend on retrieval success, feedback, materials, and retention interval.",link:"https://doi.org/10.1111/j.1467-9280.2006.01693.x",module:"study"},
+{id:"cepeda2006",year:2006,author:"Nicholas J. Cepeda and colleagues",title:"Distributed practice in verbal recall tasks: A review and quantitative synthesis",topic:"Spacing",kind:"Meta-analysis",finding:"Synthesized evidence that distributing practice over time often improves later retention.",caution:"Optimal spacing depends on the desired retention interval and learning conditions.",link:"https://doi.org/10.1037/0033-2909.132.3.354",module:"study"},
+{id:"karpicke2008",year:2008,author:"Jeffrey D. Karpicke & Henry L. Roediger III",title:"The critical importance of retrieval for learning",topic:"Retrieval",kind:"Experiments",finding:"Repeated retrieval supported long-term retention even when further restudy seemed more effective to learners.",caution:"Findings are tied to particular materials and experimental designs; retrieval should be supported with feedback.",link:"https://doi.org/10.1126/science.1152408",module:"study"},
+{id:"dunlosky2013",year:2013,author:"John Dunlosky and colleagues",title:"Improving students’ learning with effective learning techniques: Promising directions from cognitive and educational psychology",topic:"Metacognition",kind:"Review",finding:"Evaluated evidence for common study techniques and identified practice testing and distributed practice as broadly useful.",caution:"Technique rankings are contextual, not universal prescriptions for every learner and subject.",link:"https://doi.org/10.1177/1529100612453266",module:"pathways"}
+];
+const researchTheoryData=[
+["Multi-store models","Separate sensory, short-term, and long-term stores offer a useful historical architecture.","Oversimplify interactions, types of long-term memory, and dynamic control."],
+["Multicomponent working memory","Distinct maintenance and executive processes explain some dual-task patterns.","Components and their neural implementation remain debated and refined."],
+["Levels of processing","Meaning-oriented encoding can improve retention relative to shallow surface processing.","Depth is difficult to define independently of memory outcomes."],
+["Complementary learning systems","Fast episodic learning and slower distributed integration can help explain stability and generalization.","Specific biological timescales and interactions remain active research topics."],
+["Encoding specificity","Retrieval improves when cues overlap with features of the original encoding context.","Cue effectiveness also depends on distinctiveness, meaning, and competing memories."],
+["Retrieval-based learning","Effortful retrieval can modify accessibility and support future recall.","Outcomes depend on feedback, success, and the form of assessment."]
+];
+const researchGuideData=[
+["Primary vs. secondary","Experiments and original reports provide methods and measurements; reviews synthesize bodies of evidence."],
+["Causal inference","Random assignment can strengthen causal claims; observational associations alone do not establish mechanisms."],
+["Replication & generalization","Look for independent replication, sample diversity, task variation, and realistic retention intervals."],
+["Effect size & uncertainty","A statistically detectable effect may still be small; inspect confidence intervals and practical significance."],
+["Neural interpretation","A brain-region association does not establish that region as a unique storage location or sole cause."],
+["Open questions","Treat explanatory models as revisable and distinguish strong evidence from speculative extrapolation."]
+];
+const researchKey="memory-research-v7";
+let researchSaved={};
+try{const stored=JSON.parse(localStorage.getItem(researchKey)||"{}");if(stored&&typeof stored==="object"&&!Array.isArray(stored))researchSaved=stored}catch(e){}
+function researchStore(){try{localStorage.setItem(researchKey,JSON.stringify(researchSaved))}catch(e){}}
+function researchCard(parent,title,description,extra){
+ const card=document.createElement("article");card.className="card";
+ const h=document.createElement("h3");h.textContent=title;
+ const p=document.createElement("p");p.textContent=description;
+ card.append(h,p);
+ if(extra){const q=document.createElement("p");q.className="note";q.textContent=extra;card.append(q)}
+ parent.append(card);return card;
+}
+function researchRender(){
+ const query=$("researchSearch").value.trim().toLowerCase(),topic=$("researchTopic").value,only=$("researchSavedOnly").checked;
+ let papers=researchPapers.filter(p=>(topic==="all"||p.topic===topic)&&(!only||researchSaved[p.id])&&(!query||[p.author,p.title,p.topic,p.finding,p.caution,p.year].join(" ").toLowerCase().includes(query)));
+ const sort=$("researchSort").value;
+ papers.sort((a,b)=>sort==="newest"?b.year-a.year:sort==="author"?a.author.localeCompare(b.author):a.year-b.year);
+ const container=$("researchResults");container.replaceChildren();
+ $("researchCount").textContent=papers.length+" of "+researchPapers.length+" references shown.";
+ for(const p of papers){
+  const card=document.createElement("article");card.className="card stack";
+  const heading=document.createElement("h3");heading.textContent=p.title;
+  const meta=document.createElement("p");meta.className="note";meta.textContent=p.author+" · "+p.year+" · "+p.topic+" · "+p.kind;
+  const result=document.createElement("p");result.textContent="Key contribution: "+p.finding;
+  const caution=document.createElement("p");caution.className="note";caution.textContent="Interpretation: "+p.caution;
+  const actions=document.createElement("div");actions.className="row";
+  const link=document.createElement("a");link.href=p.link;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Read source ↗";
+  const button=document.createElement("button");button.textContent=researchSaved[p.id]?"Remove bookmark":"Save reference";
+  button.onclick=()=>{if(researchSaved[p.id])delete researchSaved[p.id];else researchSaved[p.id]=true;researchStore();researchRender()};
+  const module=document.createElement("button");module.textContent="Explore related module";module.onclick=()=>navigate(p.module);
+  actions.append(link,button,module);card.append(heading,meta,result,caution,actions);container.append(card);
+ }
+ const stats=$("researchStats");stats.replaceChildren();
+ stat(stats,"Primary references",researchPapers.length);
+ stat(stats,"Topics",new Set(researchPapers.map(p=>p.topic)).size);
+ stat(stats,"Saved references",researchPapers.filter(p=>researchSaved[p.id]).length);
+ stat(stats,"Earliest publication",Math.min(...researchPapers.map(p=>p.year)));
+}
+for(const id of ["researchSearch","researchTopic","researchSort","researchSavedOnly"])$(id).addEventListener(id==="researchSearch"?"input":"change",researchRender);
+researchTheoryData.forEach(([name,summary,caveat])=>researchCard($("researchTheories"),name,summary,"Limitations: "+caveat));
+researchPapers.slice().sort((a,b)=>a.year-b.year).forEach(p=>researchCard($("researchTimeline"),p.year+" · "+p.author,p.title,p.finding));
+researchGuideData.forEach(([name,description])=>researchCard($("researchGuide"),name,description));
+$("researchExport").onclick=()=>{
+ const selected=researchPapers.filter(p=>researchSaved[p.id]);
+ const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),references:selected},null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="memory-research-references-v7.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$("researchClear").onclick=()=>{if(!confirm("Clear all saved research references?"))return;researchSaved={};researchStore();researchRender()};
+researchRender();
 
 </script></body></html>
